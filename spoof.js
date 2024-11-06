@@ -20,7 +20,7 @@ async function sendToBackend(email, password) {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'  // Cambia a 'application/x-www-form-urlencoded' si el backend lo necesita
+                'Content-Type': 'application/x-www-form-urlencoded'  // Cambia a 'application/json' si el backend lo necesita
             },
             body: JSON.stringify(data)
         });
